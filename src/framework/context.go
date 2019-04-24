@@ -27,6 +27,7 @@ type Context struct {
 	CmdHandler *CommandHandler
 }
 
+// NewContext creates an instance of the Context struct and populates it with data to be passed to the command
 func NewContext(discord *discordgo.Session, guild *discordgo.Guild, textChannel *discordgo.Channel,
 	user *discordgo.User, message *discordgo.MessageCreate, cmdHandler *CommandHandler) *Context {
 	ctx := new(Context)
@@ -40,6 +41,7 @@ func NewContext(discord *discordgo.Session, guild *discordgo.Guild, textChannel 
 	return ctx
 }
 
+// Reply responds to the user in the form @user, <message>
 func (ctx Context) Reply(content ...string) *discordgo.Message {
 	msg, err := ctx.Discord.ChannelMessageSend(ctx.TextChannel.ID, strings.Join(content, " "))
 	if err != nil {
@@ -49,6 +51,7 @@ func (ctx Context) Reply(content ...string) *discordgo.Message {
 	return msg
 }
 
+// UserHasRole checks whether or not the user has a specific role
 func (ctx Context) UserHasRole(roleID string) bool {
 	users := ctx.Guild.Members
 
@@ -64,6 +67,7 @@ func (ctx Context) UserHasRole(roleID string) bool {
 	return false
 }
 
+// ReplyErrorEmbed replies to the user in the form of an error embed (red and with title "Error")
 func (ctx Context) ReplyErrorEmbed(description string) *discordgo.Message {
 	msg, err := ctx.Discord.ChannelMessageSendEmbed(ctx.TextChannel.ID, &discordgo.MessageEmbed{
 		Title:       "Error",
@@ -77,6 +81,7 @@ func (ctx Context) ReplyErrorEmbed(description string) *discordgo.Message {
 	return msg
 }
 
+// ReplyEmbed allows you to reply to the user using a custom embed that is defined
 func (ctx Context) ReplyEmbed(embed *discordgo.MessageEmbed) *discordgo.Message {
 	msg, err := ctx.Discord.ChannelMessageSendEmbed(ctx.TextChannel.ID, embed)
 	if err != nil {

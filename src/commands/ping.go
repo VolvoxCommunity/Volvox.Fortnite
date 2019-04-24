@@ -15,6 +15,7 @@ import (
 
 **/
 
+// PingCommand is the function that gets run whenever the user types "prefix"ping
 func PingCommand(ctx framework.Context) {
 	latency := ctx.Discord.HeartbeatLatency().Round(time.Millisecond).String()
 

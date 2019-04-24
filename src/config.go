@@ -19,6 +19,7 @@ type Configuration struct {
 	Prefix   string `json:"prefix"`
 }
 
+// ReadConfig attempts to parse the JSON in config.json
 func ReadConfig() Configuration {
 	bytes, err := ioutil.ReadFile("config.json")
 
