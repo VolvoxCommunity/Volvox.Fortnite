@@ -1,10 +1,14 @@
 package main
 
+import "C"
 import (
 	"fmt"
 	"github.com/bwmarrin/discordgo"
+	"github.com/volvoxcommunity/volvox.fortnite/src/commands"
+	"github.com/volvoxcommunity/volvox.fortnite/src/framework"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 )
 
@@ -16,17 +20,25 @@ import (
 
 **/
 
-var Config Configuration
+var (
+	Config         Configuration
+	commandHandler *framework.CommandHandler
+)
 
 func main() {
 	Config = ReadConfig()
 	dg, err := discordgo.New("Bot " + Config.Token)
+	commandHandler = framework.NewCommandHandler()
 
 	if err != nil {
 		panic(err)
 	}
 
+	registerCommands()
+
 	dg.AddHandler(readyHandler)
+	dg.AddHandler(messageReceived)
+
 	err = dg.Open()
 
 	if err != nil {
@@ -40,6 +52,52 @@ func main() {
 
 	_ = dg.Close()
 
+}
+
+func messageReceived(s *discordgo.Session, m *discordgo.MessageCreate) {
+	user := m.Author
+	if user.ID == Config.ClientID || user.Bot {
+		return
+	}
+
+	content := m.Content
+	if len(content) < 1 {
+		return
+	}
+
+	if content[:len(Config.Prefix)] != Config.Prefix {
+		return
+	}
+	content = content[len(Config.Prefix):]
+	if len(content) < 1 {
+		return
+	}
+
+	args := strings.Fields(content)
+	name := strings.ToLower(args[0])
+	command, found := commandHandler.Get(name)
+	if !found {
+		return
+	}
+	channel, err := s.State.Channel(m.ChannelID)
+	if err != nil {
+		fmt.Println("Error getting channel,", err)
+		return
+	}
+	guild, err := s.State.Guild(channel.GuildID)
+	if err != nil {
+		fmt.Println("Error getting guild,", err)
+		return
+	}
+	ctx := framework.NewContext(s, guild, channel, user, m, commandHandler)
+	ctx.Args = args[1:]
+	c := *command
+	c(*ctx)
+
+}
+
+func registerCommands() {
+	commandHandler.RegisterCommand("ping", commands.PingCommand)
 }
 
 func readyHandler(s *discordgo.Session, r *discordgo.Ready) {
