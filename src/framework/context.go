@@ -15,6 +15,7 @@ import (
 
 **/
 
+// Context is the struct which contains all of the necessary information for a command
 type Context struct {
 	Discord      *discordgo.Session
 	Guild        *discordgo.Guild
