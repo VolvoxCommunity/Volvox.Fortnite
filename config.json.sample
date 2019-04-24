@@ -1,4 +1,5 @@
 {
   "token": "bot token here",
-  "client_id": "bot client ID here"
+  "client_id": "bot client ID here",
+  "prefix": "bot prefix"
 }

@@ -16,6 +16,7 @@ import (
 type Configuration struct {
 	Token    string `json:"token"`
 	ClientID string `json:"client_id"`
+	Prefix   string `json:"prefix"`
 }
 
 func ReadConfig() Configuration {
