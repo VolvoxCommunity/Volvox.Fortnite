@@ -21,6 +21,7 @@ import (
 **/
 
 var (
+	// Config is the object in which the parsed configuration will be stored
 	Config         Configuration
 	commandHandler *framework.CommandHandler
 )

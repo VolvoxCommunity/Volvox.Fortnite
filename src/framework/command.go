@@ -9,8 +9,11 @@ package framework
 **/
 
 type (
-	Command        func(Context)
-	CmdMap         map[string]Command
+	// Command defines a function with a context as the parameter
+	Command func(Context)
+	// CmdMap is the list of commands that have been registered along with their Command object
+	CmdMap map[string]Command
+	// CommandHandler is the object that is responsible for holding all of the commands and information
 	CommandHandler struct {
 		cmds CmdMap
 	}

@@ -13,6 +13,7 @@ import (
 
 **/
 
+// Configuration is the object into which the config.json file will be read
 type Configuration struct {
 	Token    string `json:"token"`
 	ClientID string `json:"client_id"`
