@@ -4,7 +4,6 @@ import "C"
 import (
 	"fmt"
 	"github.com/bwmarrin/discordgo"
-	"github.com/jasonlvhit/gocron"
 	"github.com/volvoxcommunity/volvox.fortnite/src/api"
 	"github.com/volvoxcommunity/volvox.fortnite/src/commands"
 	"github.com/volvoxcommunity/volvox.fortnite/src/framework"
@@ -24,13 +23,12 @@ import (
 
 var (
 	// Config is the object in which the parsed configuration will be stored
-	Config         Configuration
+	Config         framework.Configuration
 	commandHandler *framework.CommandHandler
-	scheduler      gocron.Scheduler
 )
 
 func main() {
-	Config = ReadConfig()
+	Config = framework.ReadConfig()
 	dg, err := discordgo.New("Bot " + Config.Token)
 	commandHandler = framework.NewCommandHandler()
 
@@ -93,7 +91,7 @@ func messageReceived(s *discordgo.Session, m *discordgo.MessageCreate) {
 		fmt.Println("Error getting guild,", err)
 		return
 	}
-	ctx := framework.NewContext(s, guild, channel, user, m, commandHandler)
+	ctx := framework.NewContext(s, guild, channel, user, m, commandHandler, Config)
 	ctx.Args = args[1:]
 	c := *command
 	c(*ctx)

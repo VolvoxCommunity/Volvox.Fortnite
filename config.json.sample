@@ -2,5 +2,8 @@
   "token": "bot token here",
   "client_id": "bot client ID here",
   "prefix": "bot prefix",
-  "trn_api_key": "your TRN API key here"
+  "trn_api_key": "your TRN API key here",
+  "pc_role": "",
+  "ps4_role": "",
+  "xbox_role": ""
 }

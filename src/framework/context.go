@@ -24,13 +24,14 @@ type Context struct {
 	User         *discordgo.User
 	Message      *discordgo.MessageCreate
 	Args         []string
+	Config       Configuration
 
 	CmdHandler *CommandHandler
 }
 
 // NewContext creates an instance of the Context struct and populates it with data to be passed to the command
 func NewContext(discord *discordgo.Session, guild *discordgo.Guild, textChannel *discordgo.Channel,
-	user *discordgo.User, message *discordgo.MessageCreate, cmdHandler *CommandHandler) *Context {
+	user *discordgo.User, message *discordgo.MessageCreate, cmdHandler *CommandHandler, config Configuration) *Context {
 	ctx := new(Context)
 	ctx.Discord = discord
 	ctx.Guild = guild
@@ -38,6 +39,7 @@ func NewContext(discord *discordgo.Session, guild *discordgo.Guild, textChannel 
 	ctx.User = user
 	ctx.Message = message
 	ctx.CmdHandler = cmdHandler
+	ctx.Config = config
 
 	return ctx
 }
@@ -80,6 +82,22 @@ func (ctx Context) ReplyErrorEmbed(description string) *discordgo.Message {
 		return nil
 	}
 	return msg
+}
+
+// GetUserPlatform checks whether the user has any of the platform roles
+func (ctx Context) GetUserPlatform() string {
+	if ctx.UserHasRole(ctx.Config.XboxRole) {
+		return "xbox"
+	}
+	if ctx.UserHasRole(ctx.Config.PCRole) {
+		return "pc"
+	}
+	if ctx.UserHasRole(ctx.Config.PS4Role) {
+		return "ps4"
+	}
+
+	return "ns"
+
 }
 
 // ReplyEmbed allows you to reply to the user using a custom embed that is defined
