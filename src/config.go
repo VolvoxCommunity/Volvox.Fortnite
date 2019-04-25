@@ -15,9 +15,10 @@ import (
 
 // Configuration is the object into which the config.json file will be read
 type Configuration struct {
-	Token    string `json:"token"`
-	ClientID string `json:"client_id"`
-	Prefix   string `json:"prefix"`
+	Token     string `json:"token"`
+	ClientID  string `json:"client_id"`
+	Prefix    string `json:"prefix"`
+	TRNAPIKey string `json:"trn_api_key"`
 }
 
 // ReadConfig attempts to parse the JSON in config.json

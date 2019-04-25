@@ -4,6 +4,8 @@ import "C"
 import (
 	"fmt"
 	"github.com/bwmarrin/discordgo"
+	"github.com/jasonlvhit/gocron"
+	"github.com/volvoxcommunity/volvox.fortnite/src/api"
 	"github.com/volvoxcommunity/volvox.fortnite/src/commands"
 	"github.com/volvoxcommunity/volvox.fortnite/src/framework"
 	"os"
@@ -24,6 +26,7 @@ var (
 	// Config is the object in which the parsed configuration will be stored
 	Config         Configuration
 	commandHandler *framework.CommandHandler
+	scheduler      gocron.Scheduler
 )
 
 func main() {
@@ -99,6 +102,7 @@ func messageReceived(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 func registerCommands() {
 	commandHandler.RegisterCommand("ping", commands.PingCommand)
+	commandHandler.RegisterCommand("wins", commands.FetchWins)
 }
 
 func readyHandler(s *discordgo.Session, r *discordgo.Ready) {
@@ -108,5 +112,7 @@ func readyHandler(s *discordgo.Session, r *discordgo.Ready) {
 	if err != nil {
 		_, _ = fmt.Println(fmt.Errorf("unable to set bot status: " + err.Error()))
 	}
+
+	api.APIKey = Config.TRNAPIKey
 
 }

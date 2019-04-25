@@ -1,5 +1,6 @@
 {
   "token": "bot token here",
   "client_id": "bot client ID here",
-  "prefix": "bot prefix"
+  "prefix": "bot prefix",
+  "trn_api_key": "your TRN API key here"
 }
