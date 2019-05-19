@@ -101,6 +101,7 @@ func messageReceived(s *discordgo.Session, m *discordgo.MessageCreate) {
 func registerCommands() {
 	commandHandler.RegisterCommand("ping", commands.PingCommand)
 	commandHandler.RegisterCommand("wins", commands.FetchWins)
+	commandHandler.RegisterCommand("sync", commands.ForceTierSynchronisation)
 }
 
 func readyHandler(s *discordgo.Session, r *discordgo.Ready) {

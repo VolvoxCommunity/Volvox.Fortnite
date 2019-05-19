@@ -56,7 +56,7 @@ func FetchLifetimeWins(username, platform string) (wins string, err error) {
 		return "", err
 	}
 
-	time.Sleep(900 * time.Millisecond) // so we dont hit the rate limit
+	time.Sleep(2 * time.Second) // so we dont hit the rate limit
 	for _, v := range stats.LifeTimeStats {
 		if v.Key == "Wins" {
 			return v.Value, nil

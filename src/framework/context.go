@@ -44,6 +44,16 @@ func NewContext(discord *discordgo.Session, guild *discordgo.Guild, textChannel 
 	return ctx
 }
 
+// FetchMember fetches the author as a discordgo.Member
+func (ctx Context) FetchMember() *discordgo.Member {
+	for _, u := range ctx.Guild.Members {
+		if u.User.ID == ctx.User.ID {
+			return u
+		}
+	}
+	return nil
+}
+
 // Reply responds to the user in the form @user, <message>
 func (ctx Context) Reply(content ...string) *discordgo.Message {
 	msg, err := ctx.Discord.ChannelMessageSend(ctx.TextChannel.ID, strings.Join(content, " "))
@@ -86,14 +96,14 @@ func (ctx Context) ReplyErrorEmbed(description string) *discordgo.Message {
 
 // GetUserPlatform checks whether the user has any of the platform roles
 func (ctx Context) GetUserPlatform() string {
-	if ctx.UserHasRole(ctx.Config.XboxRole) {
-		return "xbox"
+	if ctx.UserHasRole(ctx.Config.Roles.Xbox) {
+		return "xb1"
 	}
-	if ctx.UserHasRole(ctx.Config.PCRole) {
+	if ctx.UserHasRole(ctx.Config.Roles.Pc) {
 		return "pc"
 	}
-	if ctx.UserHasRole(ctx.Config.PS4Role) {
-		return "ps4"
+	if ctx.UserHasRole(ctx.Config.Roles.Ps4) {
+		return "psn"
 	}
 
 	return "ns"

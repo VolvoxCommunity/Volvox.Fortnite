@@ -15,15 +15,23 @@ import (
 
 // Configuration is the object into which the config.json file will be read
 type Configuration struct {
-	Token      string `json:"token"`
-	ClientID   string `json:"client_id"`
-	Prefix     string `json:"prefix"`
-	TRNAPIKey  string `json:"trn_api_key"`
-	PCRole     string `json:"pc_role"`
-	PS4Role    string `json:"ps4_role"`
-	XboxRole   string `json:"xbox_role"`
-	SwitchRole string `json:"switch_role"`
-	MobileRole string `json:"mobile_role"`
+	Token     string `json:"token"`
+	ClientID  string `json:"client_id"`
+	Prefix    string `json:"prefix"`
+	TRNAPIKey string `json:"trn_api_key"`
+	GuildID   string `json:"guild_id"`
+	Roles     Roles  `json:"roles"`
+}
+
+type Roles struct {
+	Pc    string `json:"pc"`
+	Ps4   string `json:"ps4"`
+	Xbox  string `json:"xbox"`
+	Tier1 string `json:"tier1"`
+	Tier2 string `json:"tier2"`
+	Tier3 string `json:"tier3"`
+	Tier4 string `json:"tier4"`
+	Tier5 string `json:"tier5"`
 }
 
 // ReadConfig attempts to parse the JSON in config.json

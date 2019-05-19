@@ -2,8 +2,16 @@
   "token": "bot token here",
   "client_id": "bot client ID here",
   "prefix": "bot prefix",
+  "guild_id": "",
   "trn_api_key": "your TRN API key here",
-  "pc_role": "",
-  "ps4_role": "",
-  "xbox_role": ""
+  "roles": {
+    "pc": "",
+    "ps4": "",
+    "xbox": "",
+    "tier1": "",
+    "tier2": "",
+    "tier3":  "",
+    "tier4": "",
+    "tier5": ""
+  }
 }
