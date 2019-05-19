@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/ewohltman/pool"
+	"github.com/volvoxcommunity/volvox.fortnite/src/logging"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -56,7 +57,8 @@ func FetchLifetimeWins(username, platform string) (wins string, err error) {
 		return "", err
 	}
 
-	time.Sleep(2 * time.Second) // so we dont hit the rate limit
+	logging.Log.Debug(username, "wins", stats)
+
 	for _, v := range stats.LifeTimeStats {
 		if v.Key == "Wins" {
 			return v.Value, nil

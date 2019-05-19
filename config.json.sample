@@ -2,6 +2,7 @@
   "token": "bot token here",
   "client_id": "bot client ID here",
   "prefix": "bot prefix",
+  "log_channel": "",
   "guild_id": "",
   "trn_api_key": "your TRN API key here",
   "roles": {

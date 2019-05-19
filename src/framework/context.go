@@ -1,8 +1,8 @@
 package framework
 
 import (
-	"fmt"
 	"github.com/bwmarrin/discordgo"
+	"github.com/volvoxcommunity/volvox.fortnite/src/logging"
 	"github.com/volvoxcommunity/volvox.fortnite/src/utils"
 	"strings"
 )
@@ -58,7 +58,7 @@ func (ctx Context) FetchMember() *discordgo.Member {
 func (ctx Context) Reply(content ...string) *discordgo.Message {
 	msg, err := ctx.Discord.ChannelMessageSend(ctx.TextChannel.ID, strings.Join(content, " "))
 	if err != nil {
-		fmt.Println("Unable to send message:", err)
+		logging.Log.Error("Unable to send message: " + err.Error())
 		return nil
 	}
 	return msg
@@ -88,7 +88,7 @@ func (ctx Context) ReplyErrorEmbed(description string) *discordgo.Message {
 		Color:       utils.GetErrorColour(),
 	})
 	if err != nil {
-		fmt.Println("Error whilst sending embed:", err)
+		logging.Log.Error("Error whilst sending embed: " + err.Error())
 		return nil
 	}
 	return msg
@@ -114,7 +114,7 @@ func (ctx Context) GetUserPlatform() string {
 func (ctx Context) ReplyEmbed(embed *discordgo.MessageEmbed) *discordgo.Message {
 	msg, err := ctx.Discord.ChannelMessageSendEmbed(ctx.TextChannel.ID, embed)
 	if err != nil {
-		fmt.Println("Unable to send embed:", err)
+		logging.Log.Error("Unable to send embed: " + err.Error())
 		return nil
 	}
 	return msg
