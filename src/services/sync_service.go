@@ -70,7 +70,7 @@ func RunSyncService(ctx framework.Context) {
 			}
 		}
 
-		time.Sleep(1 * time.Hour)
+		time.Sleep(20 * time.Minute)
 	}
 }
 
